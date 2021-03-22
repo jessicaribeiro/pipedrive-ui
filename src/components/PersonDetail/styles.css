@@ -1,0 +1,25 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.column {
+    display: flex;
+    flex: 1;
+    margin: 8px;
+    height: 8px;
+}
+
+.column.title {
+    justify-content: flex-end;
+    color: #757575;
+}
+
+.column.description {
+    color: #B4B4B4;
+    justify-content: flex-start;
+
+}

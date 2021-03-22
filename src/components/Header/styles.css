@@ -1,0 +1,40 @@
+.header {
+    position: relative;
+    width: 100vw;
+    height: 90px;
+    top: 0;
+    left: 0;
+}
+
+.logo {
+    height: 40px;
+    background-color: #26292C;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.logo > span {
+    margin: 10px;
+    color: white;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    height: 20px;
+}
+
+.top-bar > span {
+    font-weight: bold;
+}
+
+.divider {
+    display: block;
+    height: 1px;
+    background-color: #EBEBEB;
+}
