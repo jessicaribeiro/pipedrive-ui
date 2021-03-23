@@ -9,7 +9,7 @@ const Person = ({person}) => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const {name, organization} = person;
+    const {name, org_name, phone} = person;
 
     const handleShowModal = () => {
         setIsModalVisible(true);
@@ -23,10 +23,10 @@ const Person = ({person}) => {
         <>
             <div className="person-box" onClick={handleShowModal}>
                 <div className="person-info">
-                    <p> {person.name} </p>
+                    <p> {name} </p>
                     <p className="person-organization">
                         <BsBuilding className="org-icon"/>
-                        {person.org_name}
+                        {org_name}
                     </p>
                 </div>
                 <div className="person-avatar">
@@ -45,7 +45,7 @@ const Person = ({person}) => {
                         <img/>
                     </div>
                     <p> {person.name} </p>
-                    <p style={{color: '#47D48C'}}> {person.phone[0].value} </p>
+                    <p style={{color: '#47D48C'}}> 123 </p>
                 </div>
 
                 <div className="divider"/>

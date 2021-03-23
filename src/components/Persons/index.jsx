@@ -16,7 +16,6 @@ const Persons = () => {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
-
         };
 
         fetch(url, requestOptions)
@@ -25,11 +24,11 @@ const Persons = () => {
                     return response.json()
                 } throw response;
                 })
-            .then(data => setData(data.data))
+            .then(data => setData(data))
             .catch(err => {
                 console.log("Error fetching data: " + err);
                 setError(err);
-            }).finally(() => setIsLoading(false),     console.log(data.data),
+            }).finally(() => setIsLoading(false),     console.log(data),
     );
 
 
@@ -50,13 +49,20 @@ const Persons = () => {
     // todo
     //foreach person
     return (
+        data.map((person) => {
+            con
+            // return <Person person={person}/>
+        })
 
-    <>
-        {data.map((person) => {
-            return <Person person={person}/>
-        })}
-            <LoadButton/>
-        </>
+    // <>
+    //     {data.map((person) => {
+    //         <Person person={person}/>
+    //     }
+    // }))
+    //
+    //
+    //         <LoadButton/>
+    //     </>
     );
 };
 
