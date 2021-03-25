@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalView from "../ModalView";
+import ModalView from "../../ModalView";
 import {Button, Form, Input, Modal, Row, Col} from 'antd';
 
 const PersonForm = ({visible, handleClose, handleSubmit}) => {

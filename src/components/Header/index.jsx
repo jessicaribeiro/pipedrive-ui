@@ -7,6 +7,9 @@ import {BsFillPersonPlusFill} from 'react-icons/bs';
 
 const Header = ({addPerson}) => {
 
+
+
+
     return (
         <header className="header">
             <Logo />

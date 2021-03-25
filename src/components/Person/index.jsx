@@ -19,8 +19,7 @@ const Person = ({person}) => {
     const fullName = name.split(' ');
     const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0).toUpperCase();
 
-    const assistantHash = 'bec1bf505237a7dae6dd393b24f2949d250842d1';
-    const groupsHash = '004991c3346ebbb89c05c6c7827d90d2484b653c';
+
 
 
     const handleClose = () => {
@@ -63,35 +62,7 @@ const Person = ({person}) => {
             })
     };
 
-    const deletePerson = (personId) => {
-      console.log(personId);
-        setIsLoading(true);
 
-        const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
-        const endpoint = `persons/${personId}`;
-        const url = `https://api.pipedrive.com/v1/${endpoint}?api_token=${token}`;
-
-        const requestOptions = {
-            method: 'DELETE',
-            headers: {"Accept": "application/json"},
-        };
-
-        fetch(url, requestOptions)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw response;
-            })
-            .then(data => {
-                setIsLoading(false);
-            })
-            .catch(err => {
-                console.log("Error fetching data: " + err);
-                setError(err);
-                setIsLoading(false);
-            })
-    };
 
 
     if (isLoading) {
@@ -124,33 +95,33 @@ const Person = ({person}) => {
                 {/*<p>{person.name}</p>*/}
             </div>
 
-            {isModalVisible &&
-            <ModalView visible={isModalVisible} handleClose={handleClose} title="Person Information" personId={id} handleDelete={deletePerson}>
-                <div className="modal-person-info-basic">
-                    <div className="modal-person-avatar">
-                        <Avatar
-                            style={{
-                                color: '#f56a00',
-                                backgroundColor: '#fde3cf',
-                            }}
-                        >
-                            {initials}
-                        </Avatar>
-                    </div>
-                    <p> {person.name} </p>
-                    <p style={{color: '#47D48C'}}> {phone[0].value} </p>
-                </div>
-                <div className="divider"/>
-                <PersonDetail title="Email" description={email[0].value}/>
-                <PersonDetail title="Organization" description={org_id.name}/>
-                <PersonDetail title="Assistant"
-                              description={personDetails[assistantHash]}/>
-                <PersonDetail title="Groups"
-                              description={personDetails[groupsHash]}/>
-                <PersonDetail title="Location" description={org_id.address}/>
+            {/*{isModalVisible &&*/}
+            {/*<ModalView visible={isModalVisible} handleClose={handleClose} title="Person Information" personId={id} handleDelete={deletePerson}>*/}
+            {/*    <div className="modal-person-info-basic">*/}
+            {/*        <div className="modal-person-avatar">*/}
+            {/*            <Avatar*/}
+            {/*                style={{*/}
+            {/*                    color: '#f56a00',*/}
+            {/*                    backgroundColor: '#fde3cf',*/}
+            {/*                }}*/}
+            {/*            >*/}
+            {/*                {initials}*/}
+            {/*            </Avatar>*/}
+            {/*        </div>*/}
+            {/*        <p> {person.name} </p>*/}
+            {/*        <p style={{color: '#47D48C'}}> {phone[0].value} </p>*/}
+            {/*    </div>*/}
+            {/*    <div className="divider"/>*/}
+            {/*    <PersonDetail title="Email" description={email[0].value}/>*/}
+            {/*    <PersonDetail title="Organization" description={org_id.name}/>*/}
+            {/*    <PersonDetail title="Assistant"*/}
+            {/*                  description={personDetails[assistantHash]}/>*/}
+            {/*    <PersonDetail title="Groups"*/}
+            {/*                  description={personDetails[groupsHash]}/>*/}
+            {/*    <PersonDetail title="Location" description={org_id.address}/>*/}
 
-            </ModalView>
-            }
+            {/*</ModalView>*/}
+            {/*}*/}
         </>
 
     )
@@ -164,4 +135,5 @@ const Person = ({person}) => {
 //     }).isRequired,
 // };
 
-export default SortableElement(Person);
+export default Person;
+// export default SortableElement(Person);
