@@ -5,6 +5,7 @@
     border: 1px solid #EBEBEB;
     margin: 20px 40px;
     padding: 15px;
+    cursor: pointer;
 }
 
 .person-box:first-of-type {

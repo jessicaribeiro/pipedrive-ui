@@ -1,72 +1,167 @@
 import React, {useState} from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
-import {BsBuilding} from 'react-icons/bs';
 import ModalView from "../ModalView";
 import PersonDetail from "../PersonDetail";
+import {SortableElement} from 'react-sortable-hoc';
+import {BsBuilding} from 'react-icons/bs';
+import { Avatar, Image } from 'antd';
 
 const Person = ({person}) => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [personDetails, setPersonDetails] = useState(null);
+    const [error, setError] = useState(null);
 
-    const {name, org_name, phone} = person;
+    const {id, name, org_id, phone, email} = person;
 
-    const handleShowModal = () => {
-        setIsModalVisible(true);
-    };
+    const fullName = name.split(' ');
+    const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0).toUpperCase();
 
-    const handleCloseModal = () => {
+    const assistantHash = 'bec1bf505237a7dae6dd393b24f2949d250842d1';
+    const groupsHash = '004991c3346ebbb89c05c6c7827d90d2484b653c';
+
+
+    const handleClose = () => {
         setIsModalVisible(false);
     };
 
+    const showModal = () => {
+        getPersonDetails(id);
+        setIsModalVisible(true);
+    };
+
+
+    const getPersonDetails = (personId) => {
+        setIsLoading(true);
+
+        const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
+        const endpoint = `persons/${personId}`;
+        const url = `https://api.pipedrive.com/v1/${endpoint}?api_token=${token}`;
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {"Accept": "application/json"},
+        };
+
+        fetch(url, requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw response;
+            })
+            .then(data => {
+                setPersonDetails(data.data);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.log("Error fetching data: " + err);
+                setError(err);
+                setIsLoading(false);
+            })
+    };
+
+    const deletePerson = (personId) => {
+      console.log(personId);
+        setIsLoading(true);
+
+        const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
+        const endpoint = `persons/${personId}`;
+        const url = `https://api.pipedrive.com/v1/${endpoint}?api_token=${token}`;
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {"Accept": "application/json"},
+        };
+
+        fetch(url, requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw response;
+            })
+            .then(data => {
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.log("Error fetching data: " + err);
+                setError(err);
+                setIsLoading(false);
+            })
+    };
+
+
+    if (isLoading) {
+        return null;
+    }
+
     return (
         <>
-            <div className="person-box" onClick={handleShowModal}>
-                <div className="person-info">
-                    <p> {name} </p>
-                    <p className="person-organization">
-                        <BsBuilding className="org-icon"/>
-                        {org_name}
-                    </p>
+            <div key={id} >
+                <div className="person-box" onClick={showModal}>
+                    <div className="person-info">
+                        <p> {name} </p>
+                        <p className="person-organization">
+                            <BsBuilding className="org-icon"/>
+                            {org_id.name}
+                        </p>
+                    </div>
+                    {/*<div className="person-avatar">*/}
+                        <Avatar
+                            style={{
+                                color: '#f56a00',
+                                backgroundColor: '#fde3cf',
+                            }}
+                        >
+                            {initials}
+                        </Avatar>
+                    {/*</div>*/}
+                    {/*    imagem da pessoa */}
                 </div>
-                <div className="person-avatar">
-                    <img src="img_avatar.png" alt="avatar"/>
-                </div>
-                {/*    imagem da pessoa */}
+                {/*<p>{person.name}</p>*/}
             </div>
 
-            <ModalView
-                closeModal={handleCloseModal}
-                visible={isModalVisible}
-                title="Person Information"
-            >
+            {isModalVisible &&
+            <ModalView visible={isModalVisible} handleClose={handleClose} title="Person Information" personId={id} handleDelete={deletePerson}>
                 <div className="modal-person-info-basic">
                     <div className="modal-person-avatar">
-                        <img/>
+                        <Avatar
+                            style={{
+                                color: '#f56a00',
+                                backgroundColor: '#fde3cf',
+                            }}
+                        >
+                            {initials}
+                        </Avatar>
                     </div>
                     <p> {person.name} </p>
-                    <p style={{color: '#47D48C'}}> 123 </p>
+                    <p style={{color: '#47D48C'}}> {phone[0].value} </p>
                 </div>
-
                 <div className="divider"/>
-
-                {/*<div className="modal-person-info-details">*/}
-                    {/*for each detail*/}
-                    <PersonDetail title="Email" description="gmail"/>
-                    <PersonDetail title="Email" description="gmail"/>
-                {/*</div>*/}
+                <PersonDetail title="Email" description={email[0].value}/>
+                <PersonDetail title="Organization" description={org_id.name}/>
+                <PersonDetail title="Assistant"
+                              description={personDetails[assistantHash]}/>
+                <PersonDetail title="Groups"
+                              description={personDetails[groupsHash]}/>
+                <PersonDetail title="Location" description={org_id.address}/>
 
             </ModalView>
+            }
         </>
-    );
+
+    )
 };
 
-Person.propTypes = {
-    person: PropTypes.shape({
-        name: PropTypes.string,
-        org_name: PropTypes.string,
-        phone: PropTypes.arrayOf({})
-    }).isRequired,
-};
+// Person.propTypes = {
+//     person: PropTypes.shape({
+//         name: PropTypes.string,
+//         org_name: PropTypes.string,
+//         phone: PropTypes.array,
+//     }).isRequired,
+// };
 
-export default Person;
+export default SortableElement(Person);

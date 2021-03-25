@@ -1,0 +1,9 @@
+.persons-container {
+    position: relative;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    margin-bottom: 10px;
+    z-index: 1;
+}

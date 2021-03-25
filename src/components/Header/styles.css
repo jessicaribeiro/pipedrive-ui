@@ -1,9 +1,13 @@
 .header {
-    position: relative;
+    position: fixed;
     width: 100vw;
-    height: 90px;
+    height: 100px;
     top: 0;
     left: 0;
+    z-index: 5;
+    background-color: white;
+    border-bottom: 1px solid #EBEBEB;
+
 }
 
 .logo {
@@ -37,4 +41,8 @@
     display: block;
     height: 1px;
     background-color: #EBEBEB;
+}
+
+.btn-add-person {
+    align-content: flex-end;
 }

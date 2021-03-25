@@ -5,6 +5,10 @@ import Persons from "./components/Persons";
 import Footer from "./components/Footer";
 
 import './App.css';
+import LoadButton from "./components/LoadButton";
+import ModalView from "./components/ModalView";
+import PersonForm from "./components/PersonForm";
+
 
 function App() {
   return (

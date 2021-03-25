@@ -10,8 +10,7 @@ const LoadButton = ({triggerLoad}) => {
     return (
         <div className="btn-wrapper">
             <button
-                onClick={() => {
-            }}
+                onClick={triggerLoad}
                 className="btn-load">
               Load more
             </button>

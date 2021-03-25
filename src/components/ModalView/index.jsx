@@ -1,28 +1,25 @@
 import React from 'react';
 import './styles.css';
-import {BsX} from 'react-icons/bs';
+import { DeleteOutlined } from '@ant-design/icons';
+import {Modal, Button} from "antd";
 
-const ModalView = ({visible, closeModal, children, title}) => {
 
-    //todo fazer transições no modal
+const ModalView = ({title, handleClose, children, visible, handleDelete, personId}) => {
+
+    //tmeter proptypes
     return (
-        visible && (
-            <div className={`modal ${visible ? 'show' : ''} `}>
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h4 className="modal-title"> {title} </h4>
-                        <BsX className="modal-close-btn"/>
-                    </div>
-                    <div className="modal-body">
-                        {children}
-                    </div>
-                    <div className="modal-footer">
-                        <button className="modal-back-btn" onClick={closeModal}> Back
-                        </button>
-                    </div>
-                </div>
-            </div>
-        )
+            <Modal
+                title={title}
+                visible={visible}
+                onCancel={handleClose}
+                onOk={handleClose}
+                footer={[
+                    <Button key="delete" type="primary" danger onClick={() => handleDelete(personId)} style={{float: 'left'}} icon={<DeleteOutlined />} size="medium" />,
+                    <Button key="back" onClick={handleClose}>Back</Button>
+                ]}
+            >
+                {children}
+            </Modal>
     );
 };
 
