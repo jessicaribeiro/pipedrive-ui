@@ -4,7 +4,15 @@ import {DeleteOutlined} from "@ant-design/icons";
 import PersonDetail from "../../PersonDetail";
 import './styles.css';
 
-const PersonDetails = ({visible, handleClose, handleDelete, person, isLoadingDeletePerson}) => {
+const PersonDetails = (
+    {
+        visible,
+        handleClose,
+        handleDelete,
+        person,
+        isLoadingDeletePerson
+    }
+) => {
 
     const phone = person.phone ? person.phone[0].value : '';
     const email = person.email ? person.email[0].value : '';
@@ -14,11 +22,13 @@ const PersonDetails = ({visible, handleClose, handleDelete, person, isLoadingDel
 
     const fullName = person.name.split(' ');
     const initials = fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
+
     return (
         <Modal
             visible={visible}
             title="Person Information"
             onCancel={handleClose}
+            width={450}
             footer={[
                 <Button key="delete" type="primary" danger
                         onClick={() => handleDelete(person.id)}
@@ -47,13 +57,26 @@ const PersonDetails = ({visible, handleClose, handleDelete, person, isLoadingDel
             </div>
             <div className="divider"/>
             <div className="modal-person-details">
-                <PersonDetail title="Email" description={email}/>
-                <PersonDetail title="Organization" description={person.org_id?.name}/>
-                <PersonDetail title="Assistant"
-                              description={person[assistantHash]}/>
-                <PersonDetail title="Groups"
-                              description={person[groupsHash]}/>
-                <PersonDetail title="Location" description={person.org_id?.address}/>
+                <PersonDetail
+                    title="Email"
+                    description={email}
+                />
+                <PersonDetail
+                    title="Organization"
+                    description={person.org_id?.name}
+                />
+                <PersonDetail
+                    title="Assistant"
+                    description={person[assistantHash]}
+                />
+                <PersonDetail
+                    title="Groups"
+                    description={person[groupsHash]}
+                />
+                <PersonDetail
+                    title="Location"
+                    description={person.org_id?.address}
+                />
             </div>
         </Modal>
     );

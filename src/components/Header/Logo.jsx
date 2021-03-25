@@ -6,7 +6,6 @@ const Logo = () => {
     return (
         <div className="logo">
             <img src={LogoImg} className="logo-img"/>
-            {/*<span>pipedrive</span>*/}
         </div>
     );
 };

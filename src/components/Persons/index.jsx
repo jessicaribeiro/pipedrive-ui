@@ -1,18 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './styles.css';
 import ReactDragListView from "react-drag-listview";
 import {Avatar, Button, List} from 'antd';
 import {BsBuilding} from 'react-icons/bs';
-import {LoadingOutlined} from "@ant-design/icons";
 
-
-const Persons = ({persons, openDetailsModal, loadMorePersons, onDragEnd, isLoadingPersons}) => {
+const Persons = (
+    {
+        persons,
+        openDetailsModal,
+        loadMorePersons,
+        onDragEnd,
+        isLoadingPersons
+    }
+) => {
 
     const getPersonInitials = (name) => {
         const fullName = name.split(' ');
         return fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
     };
-
 
     const loadMore =
         (persons.length > 0) ? (
@@ -48,7 +53,7 @@ const Persons = ({persons, openDetailsModal, loadMorePersons, onDragEnd, isLoadi
                                 <List.Item
                                     className='draggble'
                                     extra={
-                                        <Avatar>{getPersonInitials(item.name)}</Avatar>}
+                                        <Avatar className="person-avatar">{getPersonInitials(item.name)}</Avatar>}
 
                                     // src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
 

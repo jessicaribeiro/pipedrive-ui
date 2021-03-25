@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
+import './App.css';
 import Header from "./components/Header";
 import Persons from "./components/Persons";
 import Footer from "./components/Footer";
-import './App.css';
 import AddPersonForm from './components/Modal/AddPersonForm';
 import PersonDetails from "./components/Modal/PersonDetails";
 
 function App() {
 
     const [persons, setPersons] = useState([]);
-    const [isLoadingPersons, setIsLoadingPersons] = useState(false);
 
+    const [isLoadingPersons, setIsLoadingPersons] = useState(false);
     const [isLoadingAddPerson, setIsLoadingAddPerson] = useState(false);
     const [isLoadingDeletePerson, setIsLoadingDeletePerson] = useState(false);
 
@@ -33,7 +33,6 @@ function App() {
         setIsAddModalVisible(false);
     };
 
-
     const closeDetailsModal = () => {
         setIsDetailsModalVisible(false);
     };
@@ -44,12 +43,12 @@ function App() {
     };
 
     const addPerson = (values) => {
-        let {name, org_id, email, phone} = values;
-
         setIsLoadingAddPerson(true);
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
         const url = `https://api.pipedrive.com/v1/persons?&api_token=${token}`;
+
+        let {name, org_id, email, phone} = values;
 
         const requestOptions = {
             method: 'POST',
@@ -75,6 +74,7 @@ function App() {
             .then(data => {
                 let newPersons = [data.data, ...persons];
                 setPersons(newPersons);
+                console.log('Add person with success!');
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
@@ -112,14 +112,11 @@ function App() {
                 throw response;
             })
             .then(data => {
-                console.log('result');
-                console.log(data.data);
                 const filteredData = data.data.items.map((el) => {
                     return el.item
                 });
-                console.log('FILTEREDDATA');
-                console.log(filteredData);
                 setPersons(filteredData);
+                console.log('Search person with success!');
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
@@ -149,9 +146,6 @@ function App() {
                 throw response;
             })
             .then(data => {
-                console.log('DELETEE');
-                console.log(data);
-
                 let deletedId = data.data.id;
                 let newPersons = persons.filter((el) => el.id !== deletedId);
                 setPersons(newPersons);
@@ -166,7 +160,6 @@ function App() {
                 }
             )
     };
-
 
     const getPersons = (isEmptySearch) => {
         setIsLoadingPersons(true);
@@ -198,6 +191,8 @@ function App() {
 
                 setPersons(allPersons);
                 setPagination(data.additional_data.pagination);
+
+                console.log('Get persons with success!');
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
@@ -217,19 +212,20 @@ function App() {
         const item = newItems.splice(fromIndex, 1)[0];
         newItems.splice(toIndex, 0, item);
         setPersons(newItems);
-
     };
 
     return (
         <div className="App">
-            <Header openAddPersonModal={openAddModal}
-                    searchPerson={searchPerson}
+            <Header
+                openAddPersonModal={openAddModal}
+                searchPerson={searchPerson}
             />
-            <Persons persons={persons} deletePerson={deletePerson}
-                     openDetailsModal={openDetailsModal}
-                     loadMorePersons={loadMorePersons}
-                     onDragEnd={onDragEnd}
-                     isLoadingPersons={isLoadingPersons}
+            <Persons
+                persons={persons} deletePerson={deletePerson}
+                openDetailsModal={openDetailsModal}
+                loadMorePersons={loadMorePersons}
+                onDragEnd={onDragEnd}
+                isLoadingPersons={isLoadingPersons}
             />
             <Footer/>
 

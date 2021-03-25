@@ -27,6 +27,11 @@
     font-size: 13px;
 }
 
+.person-avatar {
+    background-color: cornflowerblue;
+    font-size: medium;
+}
+
 .ant-list-bordered {
     border: none !important;
 }

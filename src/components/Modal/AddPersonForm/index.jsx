@@ -1,8 +1,14 @@
 import React from 'react';
-import ModalView from "../../ModalView";
-import {Button, Form, Input, Modal, Row, Col} from 'antd';
+import {Form, Input, Modal} from 'antd';
 
-const PersonForm = ({visible, handleClose, handleSubmit, isLoadingAddPerson}) => {
+const PersonForm = (
+    {
+        visible,
+        handleClose,
+        handleSubmit,
+        isLoadingAddPerson
+    }
+) => {
 
     const [form] = Form.useForm();
 

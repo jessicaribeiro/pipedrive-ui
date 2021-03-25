@@ -1,3 +1,9 @@
 .modal-container {
     text-align: center !important;
 }
+
+.divider {
+    display: block;
+    height: 1px;
+    background-color: #EBEBEB;
+}
