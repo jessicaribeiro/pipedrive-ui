@@ -2,7 +2,7 @@ import React from 'react';
 import ModalView from "../../ModalView";
 import {Button, Form, Input, Modal, Row, Col} from 'antd';
 
-const PersonForm = ({visible, handleClose, handleSubmit}) => {
+const PersonForm = ({visible, handleClose, handleSubmit, isLoadingAddPerson}) => {
 
     const [form] = Form.useForm();
 
@@ -13,6 +13,7 @@ const PersonForm = ({visible, handleClose, handleSubmit}) => {
             okText="Create"
             cancelText="Cancel"
             onCancel={handleClose}
+            confirmLoading={isLoadingAddPerson}
             onOk={() => {
                 form
                     .validateFields()

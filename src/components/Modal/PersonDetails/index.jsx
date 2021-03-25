@@ -4,7 +4,7 @@ import {DeleteOutlined} from "@ant-design/icons";
 import PersonDetail from "../../PersonDetail";
 import './styles.css';
 
-const PersonDetails = ({visible, handleClose, handleDelete, person}) => {
+const PersonDetails = ({visible, handleClose, handleDelete, person, isLoadingDeletePerson}) => {
 
     const phone = person.phone ? person.phone[0].value : '';
     const email = person.email ? person.email[0].value : '';
@@ -21,8 +21,11 @@ const PersonDetails = ({visible, handleClose, handleDelete, person}) => {
             onCancel={handleClose}
             footer={[
                 <Button key="delete" type="primary" danger
-                        onClick={() => handleDelete(person.id)} style={{float: 'left'}}
-                        icon={<DeleteOutlined/>} size="medium"/>,
+                        onClick={() => handleDelete(person.id)}
+                        style={{float: 'left'}}
+                        icon={<DeleteOutlined/>} size="medium"
+                        loading={isLoadingDeletePerson}
+                />,
                 <Button key="back" onClick={handleClose}>Back</Button>
             ]}
         >

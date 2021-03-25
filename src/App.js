@@ -13,6 +13,9 @@ function App() {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    const [isLoadingAddPerson, setIsLoadingAddPerson] = useState(false);
+    const [isLoadingDeletePerson, setIsLoadingDeletePerson] = useState(false);
+
     const [isAddModalVisible, setIsAddModalVisible] = useState(false);
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
 
@@ -44,12 +47,9 @@ function App() {
     };
 
     const addPerson = (values) => {
-        console.log(values);
-
         let {name, org_id, email, phone} = values;
 
-        closeAddModal();
-        setIsLoading(true);
+        setIsLoadingAddPerson(true);
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
         const url = `https://api.pipedrive.com/v1/persons?&api_token=${token}`;
@@ -83,9 +83,11 @@ function App() {
             .catch(err => {
                 console.log("Error fetching data: " + err);
                 setError(err);
-            }).finally(() => {
-            setIsLoading(false);
-        })
+            })
+            .finally(() => {
+                setIsLoadingAddPerson(false);
+                closeAddModal();
+            })
     };
 
     const searchPerson = (term) => {
@@ -136,8 +138,7 @@ function App() {
     };
 
     const deletePerson = (personId) => {
-        console.log('DELETE ' + personId);
-        setIsLoading(true);
+        setIsLoadingDeletePerson(true);
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
         const endpoint = `persons/${personId}`;
@@ -160,8 +161,7 @@ function App() {
                 console.log(data);
 
                 let deletedId = data.data.id;
-                let newPersons = [...persons];
-                newPersons.filter((el) => el.id !== deletedId);
+                let newPersons = persons.filter((el) => el.id !== deletedId);
                 setPersons(newPersons);
                 console.log('Person deleted with success!');
             })
@@ -170,8 +170,8 @@ function App() {
                 setError(err);
             })
             .finally(() => {
+                    setIsLoadingDeletePerson(false);
                     closeDetailsModal();
-                    setIsLoading(false);
                 }
             )
     };
@@ -179,7 +179,6 @@ function App() {
 
     const getPersons = () => {
         setIsLoading(true);
-
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
         const endpoint = `persons?start=${start}&limit=4`;
@@ -198,11 +197,11 @@ function App() {
                 throw response;
             })
             .then(data => {
-                // let allPersons = [...persons, ...data.data];
+                let allPersons = [...persons, ...data.data];
                 // console.log('Persons');
                 // console.log(allPersons);
 
-                setPersons(data.data);
+                setPersons(allPersons);
                 setPagination(data.additional_data.pagination);
             })
             .catch(err => {
@@ -214,6 +213,7 @@ function App() {
     };
 
     const loadMorePersons = () => {
+        console.log('Add More');
         setStart(pagination.next_start);
     };
 
@@ -230,7 +230,8 @@ function App() {
     return (
         <div className="App">
             <Header openAddPersonModal={openAddModal}
-                    searchPerson={searchPerson}/>
+                    searchPerson={searchPerson}
+            />
             <Persons persons={persons} deletePerson={deletePerson}
                      openDetailsModal={openDetailsModal}
                      loadMorePersons={loadMorePersons}
@@ -242,7 +243,9 @@ function App() {
             <AddPersonForm
                 visible={isAddModalVisible}
                 handleClose={closeAddModal}
-                handleSubmit={addPerson}/>
+                handleSubmit={addPerson}
+                isLoadingAddPerson={isLoadingAddPerson}
+            />
             }
 
             {isDetailsModalVisible &&
@@ -250,7 +253,9 @@ function App() {
                 visible={isDetailsModalVisible}
                 handleClose={closeDetailsModal}
                 handleDelete={deletePerson}
-                person={focusPerson}/>
+                person={focusPerson}
+                isLoadingDeletePerson={isLoadingDeletePerson}
+            />
             }
 
         </div>
