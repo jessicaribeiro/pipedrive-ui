@@ -17,7 +17,7 @@ const Person = ({person}) => {
     const {id, name, org_id, phone, email} = person;
 
     const fullName = name.split(' ');
-    const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0).toUpperCase();
+    const initials = fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
 
 
 

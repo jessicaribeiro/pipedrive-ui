@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 
 const PersonDetail = ({title, description}) => {
     return (
-        <div className="row">
-            <div className="column title">
-                {title}
-            </div>
-            <div className="column description">
-                {description}
-            </div>
-        </div>
+        description ?
+            (<div className="row">
+                <div className="column title">
+                    {title}
+                </div>
+                <div className="column description">
+                    {description}
+                </div>
+            </div>) : null
     );
 };
 
-// ou entao passar o objecto todo
 PersonDetail.propTypes = {
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    description: PropTypes.string,
 };
 
 export default PersonDetail;

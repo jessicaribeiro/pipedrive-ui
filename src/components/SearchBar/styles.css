@@ -25,3 +25,8 @@
     left: 25px;
     color: #757578;
 }
+
+
+.ant-input-affix-wrapper {
+    border-radius: 15px !important;
+}

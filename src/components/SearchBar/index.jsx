@@ -1,16 +1,16 @@
 import React from 'react';
 import './styles.css';
-import { BsSearch } from "react-icons/bs";
+import {BsSearch} from "react-icons/bs";
+import {Input} from 'antd';
 
-const SearchBar = () => {
+const SearchBar = ({searchPerson}) => {
+
     return (
         <div className="search-bar">
-            <BsSearch className="search-bar-icon" />
-            <input
-                className="search-bar-input"
+            <Input
                 placeholder="Filter by name"
-                onChange={() => {}}
-            />
+                prefix={<BsSearch/>}
+                onPressEnter={(e) => searchPerson(e)}/>
         </div>
     );
 };

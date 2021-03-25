@@ -33,5 +33,6 @@
 
 .ant-list-split .ant-list-item {
     margin: 10px 30px !important;
+    cursor: pointer;
 }
 

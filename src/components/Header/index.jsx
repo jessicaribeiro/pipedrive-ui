@@ -2,30 +2,27 @@ import React from 'react';
 import Logo from "./Logo";
 import SearchBar from "../SearchBar";
 import './styles.css';
-import {Button} from "antd";
-import {BsFillPersonPlusFill} from 'react-icons/bs';
+import {Button, Tooltip} from "antd";
+import {UserAddOutlined} from '@ant-design/icons';
 
-const Header = ({addPerson}) => {
-
-
-
+const Header = ({openAddPersonModal, searchPerson}) => {
 
     return (
         <header className="header">
-            <Logo />
+            <Logo/>
             <div className="top-bar">
                 <span>People's List</span>
-                <Button
-                    className="btn-add-person"
-                    type="primary"
-                    shape="circle"
-                    icon={<BsFillPersonPlusFill />}
-                    size="small"
-                    onClick={addPerson}
-                />
-                <SearchBar />
+                <Tooltip title="Add person">
+                    <Button
+                        className="btn-add-person"
+                        shape="circle"
+                        icon={<UserAddOutlined/>}
+                        size="medium"
+                        onClick={openAddPersonModal}
+                    />
+                </Tooltip>
+                <SearchBar searchPerson={searchPerson}/>
             </div>
-            {/*<div className="divider"/>*/}
         </header>
     )
 };
