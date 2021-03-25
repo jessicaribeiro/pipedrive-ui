@@ -4,14 +4,12 @@ import Persons from "./components/Persons";
 import Footer from "./components/Footer";
 import './App.css';
 import AddPersonForm from './components/Modal/AddPersonForm';
-import {LoadingOutlined} from '@ant-design/icons';
 import PersonDetails from "./components/Modal/PersonDetails";
 
 function App() {
 
     const [persons, setPersons] = useState([]);
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingPersons, setIsLoadingPersons] = useState(false);
 
     const [isLoadingAddPerson, setIsLoadingAddPerson] = useState(false);
     const [isLoadingDeletePerson, setIsLoadingDeletePerson] = useState(false);
@@ -19,7 +17,6 @@ function App() {
     const [isAddModalVisible, setIsAddModalVisible] = useState(false);
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
 
-    const [filteredPersons, setFilteredPersons] = useState([]);
     const [start, setStart] = useState(0);
     const [pagination, setPagination] = useState(null);
     const [focusPerson, setFocusPerson] = useState(null);
@@ -76,13 +73,11 @@ function App() {
                 throw response;
             })
             .then(data => {
-                console.log('NEW PERSON');
                 let newPersons = [data.data, ...persons];
                 setPersons(newPersons);
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
-                setError(err);
             })
             .finally(() => {
                 setIsLoadingAddPerson(false);
@@ -91,14 +86,12 @@ function App() {
     };
 
     const searchPerson = (term) => {
-        console.log('SEARCH PERSON');
-        console.log(term.target.value);
-
+        // if is an empty search, display all people
         if (!term.target.value) {
-            getPersons();
+            return getPersons(true);
         }
 
-        setIsLoading(true);
+        setIsLoadingPersons(true);
         const name = term.target.value;
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
@@ -130,11 +123,10 @@ function App() {
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
-                setError(err);
-            }).finally(() => {
-            setIsLoading(false);
-
-        })
+            })
+            .finally(() => {
+                setIsLoadingPersons(false);
+            })
     };
 
     const deletePerson = (personId) => {
@@ -167,7 +159,6 @@ function App() {
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
-                setError(err);
             })
             .finally(() => {
                     setIsLoadingDeletePerson(false);
@@ -177,8 +168,8 @@ function App() {
     };
 
 
-    const getPersons = () => {
-        setIsLoading(true);
+    const getPersons = (isEmptySearch) => {
+        setIsLoadingPersons(true);
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
         const endpoint = `persons?start=${start}&limit=4`;
@@ -197,29 +188,31 @@ function App() {
                 throw response;
             })
             .then(data => {
-                let allPersons = [...persons, ...data.data];
-                // console.log('Persons');
-                // console.log(allPersons);
+                let allPersons;
+
+                if (isEmptySearch) {
+                    allPersons = data.data;
+                } else {
+                    allPersons = [...persons, ...data.data];
+                }
 
                 setPersons(allPersons);
                 setPagination(data.additional_data.pagination);
             })
             .catch(err => {
                 console.log("Error fetching data: " + err);
-                setError(err);
             }).finally(() => {
-            setIsLoading(false);
+            setIsLoadingPersons(false);
         })
     };
 
     const loadMorePersons = () => {
-        console.log('Add More');
         setStart(pagination.next_start);
     };
 
 
     const onDragEnd = (fromIndex, toIndex) => {
-        if (toIndex < 0) return; // Ignores if outside designated area
+        if (toIndex < 0) return; // Ignores if outside area
         const newItems = [...persons];
         const item = newItems.splice(fromIndex, 1)[0];
         newItems.splice(toIndex, 0, item);
@@ -236,6 +229,7 @@ function App() {
                      openDetailsModal={openDetailsModal}
                      loadMorePersons={loadMorePersons}
                      onDragEnd={onDragEnd}
+                     isLoadingPersons={isLoadingPersons}
             />
             <Footer/>
 
@@ -257,7 +251,6 @@ function App() {
                 isLoadingDeletePerson={isLoadingDeletePerson}
             />
             }
-
         </div>
     );
 }

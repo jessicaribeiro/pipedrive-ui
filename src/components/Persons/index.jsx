@@ -2,17 +2,11 @@ import React, {useEffect, useState} from 'react';
 import './styles.css';
 import ReactDragListView from "react-drag-listview";
 import {Avatar, Button, List} from 'antd';
-import PersonDetails from "../Modal/PersonDetails";
 import {BsBuilding} from 'react-icons/bs';
 import {LoadingOutlined} from "@ant-design/icons";
 
 
-const Persons = ({persons, openDetailsModal, loadMorePersons, onDragEnd}) => {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [initLoading,] = useState();
-
-
+const Persons = ({persons, openDetailsModal, loadMorePersons, onDragEnd, isLoadingPersons}) => {
 
     const getPersonInitials = (name) => {
         const fullName = name.split(' ');
@@ -21,7 +15,7 @@ const Persons = ({persons, openDetailsModal, loadMorePersons, onDragEnd}) => {
 
 
     const loadMore =
-        !isLoading ? (
+        (persons.length > 0) ? (
             <div
                 style={{
                     textAlign: 'center',
@@ -35,50 +29,45 @@ const Persons = ({persons, openDetailsModal, loadMorePersons, onDragEnd}) => {
         ) : null;
 
 
-    if (isLoading) {
-        return <LoadingOutlined style={{fontSize: 24}} spin/>;
-    }
-
     return (
         <>
-            <body className="persons-container">
-            <ReactDragListView
-                nodeSelector=".ant-list-item.draggble"
-                onDragEnd={onDragEnd}
-            >
-                <List
-                    className=""
-                    size="small"
-                    bordered
-                    loading={isLoading}
-                    loadMore={loadMore}
-                    dataSource={persons}
-                    renderItem={item => {
-                        return (
-                            <List.Item
-                                className='draggble'
-                                extra={
-                                    <Avatar>{getPersonInitials(item.name)}</Avatar>}
+            <div className="persons-container">
+                <ReactDragListView
+                    nodeSelector=".ant-list-item.draggble"
+                    onDragEnd={onDragEnd}
+                >
+                    <List
+                        className=""
+                        size="small"
+                        bordered
+                        loading={isLoadingPersons}
+                        loadMore={loadMore}
+                        dataSource={persons}
+                        renderItem={item => {
+                            return (
+                                <List.Item
+                                    className='draggble'
+                                    extra={
+                                        <Avatar>{getPersonInitials(item.name)}</Avatar>}
 
-                                // src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
+                                    // src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
 
-                                onClick={() => openDetailsModal(item)}
-                            >
-                                <List.Item.Meta
-                                    title={item.name}
-                                    description={<span
-                                        className="person-organization"><BsBuilding/> {item.org_name}</span>}
-                                />
-                            </List.Item>
-                        );
-                    }}
-                />
-            </ReactDragListView>
+                                    onClick={() => openDetailsModal(item)}
+                                >
+                                    <List.Item.Meta
+                                        title={item.name}
+                                        description={<span
+                                            className="person-organization"><BsBuilding/> {item.org_name}</span>}
+                                    />
+                                </List.Item>
+                            );
+                        }}
+                    />
+                </ReactDragListView>
 
-            </body>
+            </div>
         </>
     )
-
 };
 
 export default Persons;
