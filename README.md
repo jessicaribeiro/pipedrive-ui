@@ -6,6 +6,11 @@ This project was created with [Create React App](https://github.com/facebook/cre
 
 In the project directory, you can run:
 
+### `yarn install`
+
+Install the packages used in this project.\
+
+
 ### `npm start`
 
 Runs the app in the development mode.\
