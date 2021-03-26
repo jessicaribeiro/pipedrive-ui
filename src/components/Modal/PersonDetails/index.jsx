@@ -21,7 +21,7 @@ const PersonDetails = (
     const groupsHash = '004991c3346ebbb89c05c6c7827d90d2484b653c';
 
     const fullName = person.name.split(' ');
-    const initials = fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
+    const initials = fullName.length === 1 ? fullName.shift()?.charAt(0): fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
 
     return (
         <Modal

@@ -16,7 +16,7 @@ const Persons = (
 
     const getPersonInitials = (name) => {
         const fullName = name.split(' ');
-        return fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
+        return fullName.length === 1 ? fullName.shift()?.charAt(0): fullName.shift()?.charAt(0) + fullName.pop()?.charAt(0).toUpperCase();
     };
 
     const loadMore =
@@ -29,7 +29,8 @@ const Persons = (
                     lineHeight: '32px',
                 }}
             >
-                <Button style={{fontWeight: 'bold', fontSize: 12}} onClick={loadMorePersons}>Load more</Button>
+                <Button style={{fontWeight: 'bold', fontSize: 12}}
+                        onClick={loadMorePersons}>Load more</Button>
             </div>
         ) : null;
 
@@ -54,10 +55,8 @@ const Persons = (
                                 <List.Item
                                     className='draggble'
                                     extra={
-                                        <Avatar className="person-avatar">{getPersonInitials(item.name)}</Avatar>}
-
-                                    // src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
-
+                                        <Avatar
+                                            className="person-avatar">{getPersonInitials(item.name)}</Avatar>}
                                     onClick={() => openDetailsModal(item)}
                                 >
                                     <List.Item.Meta
