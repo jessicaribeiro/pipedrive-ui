@@ -31,4 +31,3 @@ react-icons (https://react-icons.github.io/react-icons/)
 
 https://developers.pipedrive.com/docs/api/v1/
 
-# Pipedrive_challenge
