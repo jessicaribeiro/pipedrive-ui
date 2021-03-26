@@ -20,7 +20,7 @@ const Persons = (
     };
 
     const loadMore =
-        (persons.length > 0) ? (
+        (persons.length > 5) ? (
             <div
                 style={{
                     textAlign: 'center',
@@ -29,7 +29,7 @@ const Persons = (
                     lineHeight: '32px',
                 }}
             >
-                <Button onClick={loadMorePersons}>Load more</Button>
+                <Button style={{fontWeight: 'bold', fontSize: 12}} onClick={loadMorePersons}>Load more</Button>
             </div>
         ) : null;
 
@@ -40,6 +40,7 @@ const Persons = (
                 <ReactDragListView
                     nodeSelector=".ant-list-item.draggble"
                     onDragEnd={onDragEnd}
+                    lineClassName="draggable-line"
                 >
                     <List
                         className=""

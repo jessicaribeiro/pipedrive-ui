@@ -44,8 +44,8 @@ const PersonDetails = (
                     <Avatar
                         size={64}
                         style={{
-                            color: '#f56a00',
-                            backgroundColor: '#fde3cf',
+                            color: '#6C95DC',
+                            backgroundColor: '#DDECFA',
                             marginBottom: 10,
                         }}
                     >

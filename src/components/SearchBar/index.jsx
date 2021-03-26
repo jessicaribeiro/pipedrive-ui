@@ -10,7 +10,9 @@ const SearchBar = ({searchPerson}) => {
             <Input
                 placeholder="Filter by name"
                 prefix={<BsSearch/>}
-                onPressEnter={(e) => searchPerson(e)}/>
+                onPressEnter={(e) => searchPerson(e)}
+                className="search-bar-input"
+            />
         </div>
     );
 };

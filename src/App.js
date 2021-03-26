@@ -48,7 +48,7 @@ function App() {
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
         const url = `https://api.pipedrive.com/v1/persons?&api_token=${token}`;
 
-        let {name, org_id, email, phone} = values;
+        let {name, organization, email, phone} = values;
 
         const requestOptions = {
             method: 'POST',
@@ -58,7 +58,7 @@ function App() {
             },
             body: JSON.stringify({
                 "name": name,
-                "org_id": org_id,
+                "org_id": organization,
                 "email": email,
                 "phone": phone,
             })
@@ -165,7 +165,7 @@ function App() {
         setIsLoadingPersons(true);
 
         const token = 'c3e6b60ccb63ae0250796d80b091545351776f0b';
-        const endpoint = `persons?start=${start}&limit=4`;
+        const endpoint = `persons?start=${start}&sort=name%20ASC&limit=6`;
         const url = `https://api.pipedrive.com/v1/${endpoint}&api_token=${token}`;
 
         const requestOptions = {

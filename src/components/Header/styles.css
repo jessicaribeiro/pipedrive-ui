@@ -27,6 +27,11 @@
     height: 20px;
 }
 
+.top-bar > span {
+    font-weight: bold;
+}
+
 .btn-add-person {
     margin-left: auto;
+    margin-right: 10px;
 }
